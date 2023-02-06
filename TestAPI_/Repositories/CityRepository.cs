@@ -35,7 +35,7 @@ namespace TestAPI_.Repositories
             {
                 await _context.City.AddAsync(city);
                 await _context.SaveChangesAsync();
-                return new Response(0, "City Updated Successfully", DateTime.Now);
+                return new Response(0, "City Created Successfully", DateTime.Now);
             }
         }
 

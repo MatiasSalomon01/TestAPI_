@@ -1,4 +1,4 @@
-﻿namespace TestAPI_.Models
+﻿namespace TestAPI_.Models.CIty
 {
     public class CityModel
     {

@@ -1,6 +1,15 @@
-﻿namespace TestAPI_.Interfaces.Services
+﻿using TestAPI_.Entities;
+using TestAPI_.Models;
+using TestAPI_.Models.Student;
+
+namespace TestAPI_.Interfaces.Services
 {
-    public class IStudentService
+    public interface IStudentService
     {
+        Task<ICollection<StudentViewModel>> GetAll();
+        Task<Student> GetById(int id);
+        Task<Response> Create(StudentModel student);
+        Task<Response> Update(int id, StudentModel student);
+        Task<Response> Delete(int id);
     }
 }

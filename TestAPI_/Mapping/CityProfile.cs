@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using TestAPI_.Entities;
-using TestAPI_.Models;
+using TestAPI_.Models.CIty;
 
 namespace TestAPI_.Mapping
 {

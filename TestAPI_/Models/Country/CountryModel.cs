@@ -1,4 +1,4 @@
-﻿namespace TestAPI_.Models
+﻿namespace TestAPI_.Models.Country
 {
     public class CountryModel
     {

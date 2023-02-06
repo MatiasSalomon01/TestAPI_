@@ -2,6 +2,7 @@
 using TestAPI_.Entities;
 using TestAPI_.Interfaces.Services;
 using TestAPI_.Models;
+using TestAPI_.Models.CIty;
 
 namespace TestAPI_.Controllers
 {
@@ -51,7 +52,7 @@ namespace TestAPI_.Controllers
             }
         }
 
-        [HttpPut("update")]
+        [HttpPut("update/{id:int}")]
         public async Task<IActionResult> Update(int id, CityModel city)
         {
             var result = await _services.Update(id, city);
@@ -65,7 +66,7 @@ namespace TestAPI_.Controllers
             }
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _services.Delete(id);

@@ -2,6 +2,7 @@
 using TestAPI_.Entities;
 using TestAPI_.Interfaces.Services;
 using TestAPI_.Models;
+using TestAPI_.Models.Country;
 
 namespace TestAPI_.Controllers
 {
@@ -49,7 +50,7 @@ namespace TestAPI_.Controllers
             }
         }
 
-        [HttpPut("update")]
+        [HttpPut("update/{id:int}")]
         public async Task<IActionResult> Update(int id, CountryModel country)
         {
             var result = await _services.Update(id, country);

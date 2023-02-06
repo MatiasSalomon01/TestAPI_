@@ -3,6 +3,7 @@ using TestAPI_.Entities;
 using TestAPI_.Interfaces.Respositories;
 using TestAPI_.Interfaces.Services;
 using TestAPI_.Models;
+using TestAPI_.Models.CIty;
 
 namespace TestAPI_.Services
 {

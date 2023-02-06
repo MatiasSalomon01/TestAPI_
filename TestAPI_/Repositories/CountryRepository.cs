@@ -17,7 +17,7 @@ namespace TestAPI_.Repositories
 
         public async Task<ICollection<Country>> GetAll()
         {
-            return await _context.Country.OrderBy(c => c.Id).ToListAsync();
+            return await _context.Country.OrderBy(c => c.Id).Include(c => c.Cities).ToListAsync();
         }
 
         public async Task<Country> GetById(int id)
