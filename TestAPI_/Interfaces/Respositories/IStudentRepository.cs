@@ -7,9 +7,9 @@ namespace TestAPI_.Interfaces.Respositories
     public interface IStudentRepository
     {
         Task<ICollection<StudentViewModel>> GetAll();
-        Task<Student> GetById(int id);
+        Task<StudentViewModel> GetById(int id);
         Task<Response> Create(Student student);
-        Task<Response> Update(Student student);
+        Task<Response> Update(int id, Student student);
         Task<Response> Delete(int id);
     }
 }

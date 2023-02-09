@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using TestAPI_.Entities;
 using TestAPI_.Interfaces.Respositories;
 using TestAPI_.Models;
-using TestAPI_.Models.Student;
 using TestAPI_.Models.Student_Course;
 
 namespace TestAPI_.Repositories
@@ -44,12 +43,24 @@ namespace TestAPI_.Repositories
 
         public async Task<Response> Update(Student_Course studentCourse)
         {
+            _context.Student_Course.Update(studentCourse);
+            await _context.SaveChangesAsync();
             return new Response(0, "Student_Course Updated Successfully", DateTime.Now);
         }
 
         public async Task<Response> Delete(int id)
         {
-            return new Response(0, "Student_Course Deleted Successfully", DateTime.Now);
+            var sc = await _context.Student_Course.FindAsync(id);
+            if (sc != null)
+            {
+                _context.Student_Course.Remove(sc);
+                await _context.SaveChangesAsync();
+                return new Response(0, "Student_Course Deleted Successfully", DateTime.Now);
+            }
+            else
+            {
+                return new Response(1, "Unable to Delete Student_Course", DateTime.Now);
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TestAPI_.Entities;
 using TestAPI_.Interfaces.Services;
 using TestAPI_.Models;
 using TestAPI_.Models.CIty;

@@ -10,6 +10,8 @@ namespace TestAPI_.Mapping
         {
             CreateMap<Country, CountryModel>();
             CreateMap<CountryModel, Country>();
+
+            CreateMap<Country, CountryViewModel>();
         }
     }
 }

@@ -18,12 +18,12 @@ namespace TestAPI_.Services
             _mapper = mapper;
         }
 
-        public async Task<ICollection<City>> GetAll()
+        public async Task<ICollection<CityViewModel>> GetAll()
         {
             return await _cityRepository.GetAll();
         }
 
-        public async Task<City> GetById(int id)
+        public async Task<CityViewModel> GetById(int id)
         {
             return await _cityRepository.GetById(id);
         }
@@ -34,10 +34,7 @@ namespace TestAPI_.Services
 
         public async Task<Response> Update(int id, CityModel city)
         {
-            var c = await _cityRepository.GetById(id);
-            c.Name = city.Name;
-            c.CountryId = city.CountryId;
-            return await _cityRepository.Update(c);
+            return await _cityRepository.Update(id, _mapper.Map<City>(city));
         }
 
         public async Task<Response> Delete(int id)

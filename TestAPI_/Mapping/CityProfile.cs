@@ -10,6 +10,8 @@ namespace TestAPI_.Mapping
         {
             CreateMap<City, CityModel>();
             CreateMap<CityModel, City>();
+
+            CreateMap<City, CityViewModel>();
         }
     }
 }

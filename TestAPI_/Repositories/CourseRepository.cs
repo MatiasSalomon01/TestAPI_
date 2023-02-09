@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
 using TestAPI_.Entities;
 using TestAPI_.Interfaces.Respositories;
 using TestAPI_.Models;
@@ -13,6 +11,7 @@ namespace TestAPI_.Repositories
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+
         public CourseRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
@@ -23,9 +22,9 @@ namespace TestAPI_.Repositories
             return _mapper.Map<ICollection<CourseViewModel>>(await _context.Course.ToListAsync());
         }
 
-        public async Task<Course> GetById(int id)
+        public async Task<CourseViewModel> GetById(int id)
         {
-            return await _context.Course.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return _mapper.Map<CourseViewModel>(await _context.Course.Where(c => c.Id == id).FirstOrDefaultAsync());
         }
         public async Task<Response> Create(Course course)
         {

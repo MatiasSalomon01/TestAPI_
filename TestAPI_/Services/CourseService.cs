@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using TestAPI_.Controllers;
 using TestAPI_.Entities;
 using TestAPI_.Interfaces.Respositories;
 using TestAPI_.Interfaces.Services;
 using TestAPI_.Models;
 using TestAPI_.Models.Course;
-using TestAPI_.Repositories;
 
 namespace TestAPI_.Services
 {
@@ -25,10 +23,11 @@ namespace TestAPI_.Services
             return await _courseRepository.GetAll();
         }
 
-        public async Task<Course> GetById(int id)
+        public async Task<CourseViewModel> GetById(int id)
         {
            return await _courseRepository.GetById(id);
         }
+
         public async Task<Response> Create(CourseModel course)
         {
             return await _courseRepository.Create(_mapper.Map<Course>(course));
@@ -39,7 +38,7 @@ namespace TestAPI_.Services
             var c = await _courseRepository.GetById(id);
             c.Description = course.Description;
             c.Id = id;
-            return await _courseRepository.Update(c);
+            return await _courseRepository.Update(_mapper.Map<Course>(c));
         }
 
         public async Task<Response> Delete(int id)

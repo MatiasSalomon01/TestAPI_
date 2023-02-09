@@ -7,7 +7,7 @@ namespace TestAPI_.Interfaces.Services
     public interface IStudentService
     {
         Task<ICollection<StudentViewModel>> GetAll();
-        Task<Student> GetById(int id);
+        Task<StudentViewModel> GetById(int id);
         Task<Response> Create(StudentModel student);
         Task<Response> Update(int id, StudentModel student);
         Task<Response> Delete(int id);

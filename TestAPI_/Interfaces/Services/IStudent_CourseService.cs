@@ -10,7 +10,7 @@ namespace TestAPI_.Interfaces.Services
         Task<ICollection<StudentCourseViewModel>> GetAll();
         Task<StudentCourseViewModel> GetById(int id);
         Task<Response> Create(StudentCourseModel studentCourse);
-        Task<Response> Update(StudentCourseModel studentCourse);
+        Task<Response> Update(int id, StudentCourseModel studentCourse);
         Task<Response> Delete(int id);
     }
 }

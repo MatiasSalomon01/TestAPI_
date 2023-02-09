@@ -9,11 +9,13 @@ namespace TestAPI_.Services
 {
     public class Student_CourseService : IStudent_CourseService
     {
+        private readonly ApplicationDbContext _context;
         private readonly IStudent_CourseRepository _studentCourseRepository;
         private readonly IMapper _mapper;
 
-        public Student_CourseService(IStudent_CourseRepository studentCourseRepository, IMapper mapper)
+        public Student_CourseService(ApplicationDbContext context, IStudent_CourseRepository studentCourseRepository, IMapper mapper)
         {
+            _context = context;
             _studentCourseRepository = studentCourseRepository;
             _mapper = mapper;
         }
@@ -31,14 +33,17 @@ namespace TestAPI_.Services
             return await _studentCourseRepository.Create(_mapper.Map<Student_Course>(studentCourse));
         }
 
-        public async Task<Response> Update(StudentCourseModel studentCourse)
+        public async Task<Response> Update(int id, StudentCourseModel studentCourse)
         {
-            throw new NotImplementedException();
+            var sc = await _context.Student_Course.FindAsync(id);
+                sc.StudentId = studentCourse.StudentId;
+                sc.CourseId = studentCourse.CourseId;
+            return await _studentCourseRepository.Update(sc);
         }
 
         public async Task<Response> Delete(int id)
         {
-            throw new NotImplementedException();
+            return await _studentCourseRepository.Delete(id);
         }
     }
 }

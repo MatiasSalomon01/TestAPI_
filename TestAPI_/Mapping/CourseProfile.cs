@@ -12,8 +12,6 @@ namespace TestAPI_.Mapping
             CreateMap<CourseModel, Course>();
 
             CreateMap<Course, CourseViewModel>();
-            //CreateMap<CourseViewModel, Course>();
-
         }
     }
 }

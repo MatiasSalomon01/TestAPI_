@@ -1,28 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using TestAPI_.Entities;
 using TestAPI_.Interfaces.Respositories;
 using TestAPI_.Models;
+using TestAPI_.Models.CIty;
 
 namespace TestAPI_.Repositories
 {
     public class CityRepository : ICityRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CityRepository(ApplicationDbContext context)
+        public CityRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<ICollection<City>> GetAll()
+        public async Task<ICollection<CityViewModel>> GetAll()
         {
-            return await _context.City.OrderBy(c => c.Id).ToListAsync();
+            return await _context.City
+                .OrderBy(c => c.Id)
+                .ProjectTo<CityViewModel>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
 
 
-        public async Task<City> GetById(int id)
+        public async Task<CityViewModel> GetById(int id)
         {
-            return await _context.City.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return await _context.City
+                .Where(c => c.Id == id)
+                .ProjectTo<CityViewModel>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
         }
         public async Task<Response> Create(City city)
         {
@@ -39,11 +50,16 @@ namespace TestAPI_.Repositories
             }
         }
 
-        public async Task<Response> Update(City city)
+        public async Task<Response> Update(int id, City city)
         {
-            if (_context.City.Any(c => c.Id == city.Id && c.CountryId == city.CountryId))
+            var c = await _context.City.FindAsync(id);
+
+            if (c != null)
             {
-                _context.City.Update(city);
+                c.Name = city.Name;
+                c.CountryId = city.CountryId;
+
+                _context.City.Update(c);
                 await _context.SaveChangesAsync();
                 return new Response(0, "City Updated Successfully", DateTime.Now);
             }

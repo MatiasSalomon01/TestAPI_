@@ -19,12 +19,12 @@ namespace TestAPI_.Services
             _mapper = mapper;
         }
 
-        public async Task<ICollection<Country>> GetAll()
+        public async Task<ICollection<CountryViewModel>> GetAll()
         {
             return await _countryRepository.GetAll();
         }
 
-        public async Task<Country> GetById(int id)
+        public async Task<CountryViewModel> GetById(int id)
         {
             return await _countryRepository.GetById(id);
         }
@@ -35,10 +35,7 @@ namespace TestAPI_.Services
 
         public async Task<Response> Update(int id, CountryModel country)
         {
-            var c = await _countryRepository.GetById(id);
-            c.Name = country.Name;
-
-            return await _countryRepository.Update(c);  
+            return await _countryRepository.Update(id, _mapper.Map<Country>(country));  
         }
 
         public async Task<Response> Delete(int id)

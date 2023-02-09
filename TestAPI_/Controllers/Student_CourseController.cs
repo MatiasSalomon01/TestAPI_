@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using TestAPI_.Entities;
 using TestAPI_.Interfaces.Services;
+using TestAPI_.Models;
 using TestAPI_.Models.Student_Course;
 
 namespace TestAPI_.Controllers
@@ -13,15 +10,12 @@ namespace TestAPI_.Controllers
     [ApiController]
     public class Student_CourseController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper; 
         private readonly IStudent_CourseService _student_CourseService;
-        public Student_CourseController(ApplicationDbContext context, IMapper mapper, IStudent_CourseService student_CourseService)
+        public Student_CourseController(IMapper mapper, IStudent_CourseService student_CourseService)
         {
-            _context = context;
-            _mapper = mapper;
             _student_CourseService = student_CourseService;
         }
+
         [HttpGet("get_all")]
         public async Task<IActionResult> GetAll()
         {
@@ -31,33 +25,58 @@ namespace TestAPI_.Controllers
         [HttpGet("get/{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await _student_CourseService.GetById(id));
+            var result = await _student_CourseService.GetById(id);
+            if (result == null)
+            {
+                return NotFound(new Response(1, "Unable to Retrieve Student_Course " + id, DateTime.Now));
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] StudentCourseModel studentCourse)
         {
-            return Ok(await _student_CourseService.Create(studentCourse));
+            var result = await _student_CourseService.Create(studentCourse);
+            if (0.Equals(result.Status))
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
 
         [HttpPut("update/{id:int}")]
         public async Task<IActionResult> Update(int id, StudentCourseModel studentCourse)
         {
-            /*var sc = await _context.Student_Course.FindAsync(id);
-            sc.StudentId = studentCourse.StudentId;
-            sc.CourseId = studentCourse.CourseId;
-            _context.Student_Course.Update(sc);
-            await _context.SaveChangesAsync();*/
-            return Ok();
+            var result = await _student_CourseService.Update(id, studentCourse);
+
+            if (0.Equals(result.Status))
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
 
         [HttpDelete("delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var sc = await _context.Student_Course.FindAsync(id);
-            _context.Student_Course.Remove(sc);
-            await _context.SaveChangesAsync();
-            return Ok();
+            var result = await _student_CourseService.Delete(id);
+            if (0.Equals(result.Status))
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
     }
 }
