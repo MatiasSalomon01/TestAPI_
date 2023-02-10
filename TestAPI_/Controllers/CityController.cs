@@ -78,5 +78,11 @@ namespace TestAPI_.Controllers
                 return NotFound(result);
             }
         }
+
+        [HttpGet("get-prueba1")]
+        public async Task<string> GetPrueba1()
+        {
+            return "Prueba 1 funciona";
+        }
     }
 }
