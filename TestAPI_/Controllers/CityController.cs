@@ -78,5 +78,11 @@ namespace TestAPI_.Controllers
                 return NotFound(result);
             }
         }
+
+        [HttpGet("get-prueba2")]
+        public string getPrueba2()
+        {
+            return "prueba2";
+        }
     }
 }
