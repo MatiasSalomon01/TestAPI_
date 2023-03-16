@@ -84,5 +84,12 @@ namespace TestAPI_.Controllers
         {
             return "prueba2";
         }
+
+        [HttpGet]
+        public async Task<IActionResult> pruebaDeInclude()
+        {
+            var result = await _services.PruebaDeInclude();
+            return Ok(result);
+        }
     }
 }

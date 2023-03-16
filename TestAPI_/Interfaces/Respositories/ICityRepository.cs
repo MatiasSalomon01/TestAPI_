@@ -11,5 +11,6 @@ namespace TestAPI_.Interfaces.Respositories
         Task<Response> Create(City city);
         Task<Response> Update(int id, City city);
         Task<Response> Delete(int id);
+        Task<List<City>> PruebaDeInclude();
     }
 }

@@ -41,5 +41,11 @@ namespace TestAPI_.Services
         {
             return await _cityRepository.Delete(id);
         }
+        public async Task<List<City>> PruebaDeInclude()
+        {
+            return await _cityRepository.PruebaDeInclude();
+        }
+
+        
     }
 }

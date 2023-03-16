@@ -83,5 +83,10 @@ namespace TestAPI_.Repositories
                 return new Response(1, "Unable to Delete City", DateTime.Now);
             }
         }
+        public async Task<List<City>> PruebaDeInclude()
+        {
+            var result = await _context.City.Include(c => c.Country).ToListAsync();
+            return result;
+        }
     }
 }

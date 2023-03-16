@@ -11,5 +11,6 @@ namespace TestAPI_.Interfaces.Services
         Task<Response> Create(CityModel city);
         Task<Response> Update(int id, CityModel city);
         Task<Response> Delete(int id);
+        Task<List<City>> PruebaDeInclude();
     }
 }
