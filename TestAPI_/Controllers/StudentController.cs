@@ -76,5 +76,12 @@ namespace TestAPI_.Controllers
                 return NotFound(result);
             }
         }
+
+        [HttpGet]
+        public IActionResult Filtering(string? filter)
+        {
+            var result = _services.Filtering(filter);
+            return Ok(result);
+        }
     }
 }

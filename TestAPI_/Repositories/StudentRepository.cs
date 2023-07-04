@@ -1,10 +1,16 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text.Json;
 using TestAPI_.Entities;
 using TestAPI_.Interfaces.Respositories;
 using TestAPI_.Models;
 using TestAPI_.Models.Student;
+using Newtonsoft.Json.Linq;
+using System.Runtime.ConstrainedExecution;
 
 namespace TestAPI_.Repositories
 {
@@ -76,6 +82,11 @@ namespace TestAPI_.Repositories
             {
                 return new Response(1, "Unable to Student Country", DateTime.Now);
             }
+        }
+
+        public dynamic Filtering(string? filter)
+        {
+            return 0;
         }
     }
 }

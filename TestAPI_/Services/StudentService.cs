@@ -41,5 +41,10 @@ namespace TestAPI_.Services
         {
             return await _studentRepository.Delete(id);
         }
+
+        public dynamic Filtering(string? filter)
+        {
+            return _studentRepository.Filtering(filter);
+        }
     }
 }

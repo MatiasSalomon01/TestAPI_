@@ -11,5 +11,6 @@ namespace TestAPI_.Interfaces.Respositories
         Task<Response> Create(Student student);
         Task<Response> Update(int id, Student student);
         Task<Response> Delete(int id);
+        dynamic Filtering(string? filter);
     }
 }
