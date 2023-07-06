@@ -31,10 +31,10 @@ namespace TestAPI_.Controllers
             foreach (var item in model.TablaMiddle)
             {
                 var exists = _context.TablaDos.Any(t => t.Id == item);
-                if (exists is false)  return BadRequest(new { Message = $"Id {item} no exite en la tabla TablaDos" });
+                if (exists is false) return BadRequest(new { Message = $"Id {item} no exite en la tabla TablaDos" });
                 list.Add(new TablaUnoDos() { TablaDosId = item });
             }
-            
+
             var entity = new TablaUno() { Descripcion = model.Description, TablaUnoDos = list };
             _context.TablaUno.Add(entity);
             _context.SaveChanges();
@@ -51,16 +51,17 @@ namespace TestAPI_.Controllers
         [HttpPost("AddTablaDos")]
         public IActionResult AddTablaDos(TableModel2 model)
         {
-            var list = new List<TablaUnoDos>();
-
             foreach (var item in model.TablaMiddle)
             {
                 var exists = _context.TablaUno.Any(t => t.Id == item);
                 if (exists is false) return BadRequest(new { Message = $"Id {item} no exite en la tabla TablaUno" });
-                list.Add(new TablaUnoDos() { TablaUnoId = item });
             }
 
-            var entity = new TablaDos() { Descripcion = model.Description, TablaUnoDos = list };
+            var list2 = model.TablaMiddle
+                .Select(item => new TablaUnoDos { TablaUnoId = item })
+                .ToList();
+
+            var entity = new TablaDos() { Descripcion = model.Description, TablaUnoDos = list2 };
             _context.TablaDos.Add(entity);
             _context.SaveChanges();
             return Created(string.Empty, new { entity.Id });
