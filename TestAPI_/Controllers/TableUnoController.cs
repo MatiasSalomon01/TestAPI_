@@ -19,7 +19,19 @@ namespace TestAPI_.Controllers
         [HttpGet("GetTablaUno")]
         public IActionResult GetTablaUno()
         {
-            var entity = _context.TablaUno.Include(t => t.TablaUnoDos).ToList();
+            var entity = _context.TablaUno
+                .Include(t => t.TablaUnoDos)
+                .Select(t => new TableGetModel
+                {
+                    Id = t.Id,
+                    Description = t.Descripcion,
+                    Medios = t.TablaUnoDos.Select(m => new TableMiddleModel
+                    {
+                        Id = m.TablaDos.Id,
+                        Description = m.TablaDos.Descripcion
+                    }).ToList()
+                })
+                .ToList();
             return Ok(entity);
         }
 
@@ -67,9 +79,23 @@ namespace TestAPI_.Controllers
             return Created(string.Empty, new { entity.Id });
         }
     }
+
     public class TableModel2
     {
         public string Description { get; set; }
         public List<int> TablaMiddle { get; set; }
+    }
+
+    public class TableGetModel
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public List<TableMiddleModel> Medios { get; set; }
+    }
+
+    public class TableMiddleModel
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
     }
 }
