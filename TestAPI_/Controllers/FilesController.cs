@@ -20,7 +20,7 @@ namespace TestAPI_.Controllers
         public async Task<IActionResult> UploadFile(IFormFile file, CancellationToken cancellationToken)
         {
             var result = await _service.UploadFile(file, cancellationToken);
-            if (result.Status.ToString() == HttpStatusCode.BadRequest.ToString()) return BadRequest(result);
+            if (result.Status is (int) HttpStatusCode.BadRequest) return BadRequest(result);
             return Ok(result);
         }
     }

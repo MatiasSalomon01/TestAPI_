@@ -48,7 +48,7 @@ namespace TestAPI_.Services
                 listModels.Add(model);
             }
 
-            await InsertBulkData(listModels, cancellationToken);
+            //await InsertBulkData(listModels, cancellationToken);
 
             return new Response(200, "Excel insertado con exito", DateTime.Now);
         }
@@ -59,6 +59,18 @@ namespace TestAPI_.Services
             {
                 await file.CopyToAsync(memoryStream, cancellationToken);
                 memoryStream.Seek(0, SeekOrigin.Begin);
+
+                using (var streamReader = new StreamReader(memoryStream))
+                {
+                    var firstLine = streamReader.ReadLine();
+                    var headers = firstLine.Split(",");
+
+                    var propertiesName = typeof(ImportContentModel).GetProperties().Select(x => x.Name).ToList();
+
+                    if (!propertiesName.SequenceEqual(headers)) 
+                        throw new Exception("csv-headers");
+                
+                }
 
                 using (var streamReader = new StreamReader(memoryStream))
                 {
@@ -75,7 +87,7 @@ namespace TestAPI_.Services
                     var csvReader = new CsvReader(streamReader, configuration);
                     var records = csvReader.GetRecords<ImportContentModel>().ToList();
 
-                    await InsertBulkData(records, cancellationToken);
+                    //await InsertBulkData(records, cancellationToken);
                     return new Response(200, "Csv insertado con exito", DateTime.Now);
                 }
             }
