@@ -17,6 +17,7 @@ namespace TestAPI_
         public DbSet<TablaUno> TablaUno { get; set; }
         public DbSet<TablaDos> TablaDos { get; set; }
         public DbSet<TablaUnoDos> TablaUnoDos { get; set; }
+        public DbSet<ImportContent> ImportsContent { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
